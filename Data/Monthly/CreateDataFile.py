@@ -1,5 +1,7 @@
 import sys
 
+#gotta remove the NaN's on the data file with last known value
+
 _avgTemps = [2.62,3.22,5.32,8.33,11.33,13.46,14.33,13.87,12.08,9.24,6.10,3.66]
 
 def main():
@@ -12,15 +14,9 @@ def main():
         print("Please supply target file")
         return 1
 
-    with open(sys.argv[1], 'r') as src, open(sys.argv[2], 'w') as targ:
-        temps = src.readline().split(',')
-        temps = temps[:-1];
-        numt = len(temps)
-        points = [float(temps[i]) for i in range(len(temps))]
-
-        for i in range(numt):
-            points[i] = int((points[i] + _avgTemps[i % 12]) * 100)
-            targ.write("%d\n" % points[i])
+    reader = csv.reader(open("test.csv", "rb"), delimiter=",")
+    x = list(reader)
+    result = numpy.array(x).astype("float")
 
     return 0
 
